@@ -26,7 +26,7 @@ public class CalculationMakerTest {
     @Test
     public void testCalculate() {
         System.out.println("calculate");
-        var maker = new CalculationMaker();
+        CalculationMakerInterface maker = new CalculationMaker();
         double v = 15;
         double t = 7;
         double alpha = 30;
