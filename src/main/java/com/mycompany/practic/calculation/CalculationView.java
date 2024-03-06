@@ -44,7 +44,7 @@ public class CalculationView implements CalculationViewInterface{
     public void ViewResults() {
         String x = result.getResultX();
         String y = result.getResultY();
-        System.out.println("(" +x+";" + y+")");
+        System.out.println(result.getResult());
     }
     
 }

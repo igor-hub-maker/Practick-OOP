@@ -58,9 +58,15 @@ public class CalculationResult implements Externalizable {
     public String getResultX() {
         return x;
     }
-
-    public void setResultX(String x) {
+    
+    public String setResultX(String x) {
         this.x = x;
+        return x;
+    }
+    
+    public int setResultX(int x) {
+        this.x = Integer.toHexString(x);
+        return x;
     }
     
     public String getResultY() {
@@ -71,11 +77,29 @@ public class CalculationResult implements Externalizable {
         this.y = y;
     }
     
-    public void setResult(String x, String y)
+    public int setResultY(int y) {
+        this.y = Integer.toHexString(y);
+        return y;
+    }
+    
+    public String getResult(){
+        return "(" + x + ";" + y + ")";
+    }
+    
+    public String setResult(String x, String y)
     {
         this.x = x;
         this.y = y;
+        return "("+x+";"+y+")";
     }
+    
+    public String setResult(int x, int y)
+    {
+        this.x = Integer.toHexString(x);
+        this.y = Integer.toHexString(y);
+        return "("+x+";"+y+")";
+    }
+    
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
         out.writeDouble(v);
