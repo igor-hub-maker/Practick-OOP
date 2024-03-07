@@ -45,4 +45,13 @@
 Розробити клас для тестування основної функціональності.
 [Файл](src/test/java/com/mycompany/practic/CalculationWorkerTest.java)
 
-![img](img/06.03.2024.png)
+![img](img/06.03.2024%20.png)
+
+# 07.03.24
+Реалізувати можливість скасування (undo) операцій (команд).
+[Файл](src/main/java/com/mycompany/practic/CalculationWorker.java)
+У файлі введена система якщо при введенні команди `exit`, програма завершається достроково
+
+Продемонструвати поняття "макрокоманда"
+[Файл](src/main/java/com/mycompany/practic/Practic.java)
+У файлі є метод `calculateAndShowResult()` який обєднує в собі функціонал методу `calculate()` та методу `showResult*()` 
