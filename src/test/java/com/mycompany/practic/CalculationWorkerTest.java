@@ -4,7 +4,10 @@
  */
 package com.mycompany.practic;
 
+import com.mycompany.practic.Exceptions.ExitException;
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,7 +28,11 @@ public class CalculationWorkerTest {
         System.out.println("setV");
         CalculationWorker instance = new CalculationWorker();
         double num = 5;
-        instance.setV();
+        try {
+            instance.setV();
+        } catch (ExitException ex) {
+            Logger.getLogger(CalculationWorkerTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         assertEquals(instance.v, num);
     }
 
@@ -37,7 +44,11 @@ public class CalculationWorkerTest {
         System.out.println("setT");
         CalculationWorker instance = new CalculationWorker();
         double num = 5;
-        instance.setT();
+        try {
+            instance.setT();
+        } catch (ExitException ex) {
+            Logger.getLogger(CalculationWorkerTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         assertEquals(instance.t, num);
     }
 
@@ -49,7 +60,11 @@ public class CalculationWorkerTest {
         System.out.println("setAlpha");
         CalculationWorker instance = new CalculationWorker();
         double num = 5;
-        instance.setAlpha();
+        try {
+            instance.setAlpha();
+        } catch (ExitException ex) {
+            Logger.getLogger(CalculationWorkerTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         assertEquals(instance.alpha, num);
     }
 
@@ -60,7 +75,11 @@ public class CalculationWorkerTest {
     public void testCalculateAndShowResult() {
         System.out.println("calculateAndShowResult");
         CalculationWorker instance = new CalculationWorker();
-        instance.calculateAndShowResult();
+        try {
+            instance.calculateAndShowResult();
+        } catch (ExitException ex) {
+            Logger.getLogger(CalculationWorkerTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String expX = Integer.toHexString(16);
         String expY = Integer.toHexString(-343);
          assertEquals(instance.result.getResult(), "(" + expX+";"+expY+")");
@@ -73,7 +92,11 @@ public class CalculationWorkerTest {
     public void testCalculate() {
         System.out.println("calculate");
         CalculationWorker instance = new CalculationWorker();
-        instance.calculate();
+        try{
+            instance.calculate();
+                } catch (ExitException ex) {
+            Logger.getLogger(CalculationWorkerTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String expX = Integer.toHexString(16);
         String expY = Integer.toHexString(-343);
         assertEquals(instance.result.getResult(), "(" + expX+";"+expY+")");
