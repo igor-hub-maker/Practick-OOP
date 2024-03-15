@@ -10,11 +10,9 @@ public class CalculationMaker implements CalculationMakerInterface{
     // Метод для розв'язання задачі
     @Override
     public CalculationResult calculate(double v, double t, double alpha) {
-        int x = (int) (v* cos(alpha)*t);
-        int y = (int) (v * sin(alpha) * t - (g*t*t)/2);
-        String xHex = Integer.toHexString(x);
-        String yHex = Integer.toHexString(y);
-        return new CalculationResult(v, t, alpha, xHex, yHex);
+        double x = v * cos(alpha)*t;
+        double y = v * sin(alpha) * t - (g*t*t)/2;
+        return new CalculationResult(v, t, alpha, x, y);
     }
 }
 

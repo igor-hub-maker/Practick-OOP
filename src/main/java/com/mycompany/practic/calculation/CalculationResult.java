@@ -15,11 +15,11 @@ public class CalculationResult implements Externalizable {
     private double alpha;
     
     // Результат обчислень
-    private String x;
-    private String y;
+    private double x;
+    private double y;
     
     // Конструктор класу
-    public CalculationResult(double v, double t, double alpha, String x, String y) {
+    public CalculationResult(double v, double t, double alpha, double x, double y) {
         this.v = v;
         this.t = t;
         this.alpha = alpha;
@@ -55,48 +55,30 @@ public class CalculationResult implements Externalizable {
     }
     
 
-    public String getResultX() {
+    public double getResultX() {
         return x;
     }
     
-    public String setResultX(String x) {
+    public void setResultX(double x) {
         this.x = x;
-        return x;
     }
     
-    public int setResultX(int x) {
-        this.x = Integer.toHexString(x);
-        return x;
-    }
-    
-    public String getResultY() {
+    public double getResultY() {
         return y;
     }
 
-    public void setResultY(String y) {
+    public void setResultY(double y) {
         this.y = y;
-    }
-    
-    public int setResultY(int y) {
-        this.y = Integer.toHexString(y);
-        return y;
     }
     
     public String getResult(){
         return "(" + x + ";" + y + ")";
     }
     
-    public String setResult(String x, String y)
+    public String setResult(double x, double y)
     {
         this.x = x;
         this.y = y;
-        return "("+x+";"+y+")";
-    }
-    
-    public String setResult(int x, int y)
-    {
-        this.x = Integer.toHexString(x);
-        this.y = Integer.toHexString(y);
         return "("+x+";"+y+")";
     }
     
@@ -105,8 +87,8 @@ public class CalculationResult implements Externalizable {
         out.writeDouble(v);
         out.writeDouble(t);
         out.writeDouble(alpha);
-        out.writeUTF(x);
-        out.writeUTF(y);
+        out.writeUTF(Double.toHexString(x));
+        out.writeUTF(Double.toHexString(y));
     }
 
     @Override
@@ -114,8 +96,8 @@ public class CalculationResult implements Externalizable {
         v = in.readDouble();
         t = in.readDouble();
         alpha = in.readDouble();
-        x = in.readUTF();
-        y = in.readUTF();
+        x = Double.parseDouble(in.readUTF());
+        y = Double.parseDouble(in.readUTF());
     }
 }
 

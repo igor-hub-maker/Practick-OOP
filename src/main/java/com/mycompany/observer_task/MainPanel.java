@@ -4,62 +4,42 @@
  */
 package com.mycompany.observer_task;
 
-import java.awt.*;
-import java.util.*;
-import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
+import com.mycompany.practic.calculation.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+import javax.swing.JPanel;
+import org.knowm.xchart.XYChart;
 
 /**
  *
  * @author igore
  */
-public class MainPanel extends JPanel implements Observer {
-
-    private DefaultListModel<Person> people;
-    private int adjustingPersonIndex;
-    private ListSelectionListener listSelectionListener;
-    
+public class MainPanel extends javax.swing.JPanel implements Observer {
+    final CalculationMakerInterface calculationMaker;
+    final DataCollection data;
+    final XYChart chart;
+    final JPanel chartPanel;
     /**
      * Creates new form MainPanel
      */
-    public MainPanel() {
-        people = new DefaultListModel<Person>();
-        listSelectionListener = new ListSelectionListener(){
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if(!e.getValueIsAdjusting()) return;
-                adjustingPersonIndex = e.getFirstIndex();
-                prepareToEdit();
-            }
-        };
+    public MainPanel(XYChart chart, JPanel chartPanel ,List<Double> xData, List<Double> yData) {
+        this.chart = chart;
+        this.chartPanel = chartPanel;
+        data = new DataCollection(xData, yData);
+        data.addObserver(this);
+        var calculationFactory = new CalculationFactory();
+        calculationMaker = calculationFactory.CreateCalculationMaker();
         initComponents();
-        jList1.addListSelectionListener(listSelectionListener);
-        jList1.setModel(people);
-        initPeople();
+        
     }
 
-    private void initPeople(){
-        addPerson(new Person("Josh", "Smidt", "Developer"));
-        addPerson(new Person("Michael", "Jobs", "Project Manadger"));
-        addPerson(new Person("Steve", "Henk", "Tester"));
-        addPerson(new Person("Germiona", "Wizli", "Designer"));
-//        showPeople();
+    @Override
+    public void update(Observable o, Object arg) {
+        chart.updateXYSeries("y(x)", data.getxData(), data.getyData(), null);
+        chartPanel.repaint();
     }
-    
-    public void addPerson(Person person){
-        people.addElement(person);
-        person.addObserver(this);
-    }
-    
-    private void prepareToEdit(){
-        var person = people.get(adjustingPersonIndex);
-        nameEdit.setText(person.getName());
-        surnameEdit.setText(person.getSurname());
-        jobEdit.setText(person.getJob());
-    }
-    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -70,34 +50,22 @@ public class MainPanel extends JPanel implements Observer {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        nameAdd = new javax.swing.JEditorPane();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        surnameAdd = new javax.swing.JEditorPane();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jobAdd = new javax.swing.JEditorPane();
-        addButton = new javax.swing.JToggleButton();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        nameEdit = new javax.swing.JEditorPane();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        surnameEdit = new javax.swing.JEditorPane();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        jobEdit = new javax.swing.JEditorPane();
-        editButton = new javax.swing.JToggleButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        vAdd = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        tAdd = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        alphaAdd = new javax.swing.JTextField();
+        addButton = new javax.swing.JButton();
 
-        jScrollPane2.setViewportView(nameAdd);
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("V");
 
-        jScrollPane3.setViewportView(surnameAdd);
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("T");
 
-        jScrollPane4.setViewportView(jobAdd);
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Alpha");
 
         addButton.setText("Add");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -106,160 +74,93 @@ public class MainPanel extends JPanel implements Observer {
             }
         });
 
-        jScrollPane5.setViewportView(nameEdit);
-
-        jScrollPane6.setViewportView(surnameEdit);
-
-        jScrollPane7.setViewportView(jobEdit);
-
-        editButton.setText("Edit");
-        editButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editButtonActionPerformed(evt);
-            }
-        });
-
-        jList1.setModel(jList1.getModel());
-        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(jList1);
-
-        jLabel1.setText("Surname");
-
-        jLabel2.setText("Name");
-
-        jLabel3.setText("Name");
-
-        jLabel4.setText("Job");
-
-        jLabel5.setText("Job");
-
-        jLabel6.setText("Surname");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                        .addComponent(jScrollPane3)
-                        .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6)
-                    .addComponent(jScrollPane7)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                    .addComponent(editButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(vAdd)
+                    .addComponent(tAdd)
+                    .addComponent(alphaAdd)
+                    .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(3, 3, 3)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(addButton)
-                            .addComponent(editButton))
-                        .addGap(0, 86, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addComponent(jLabel1)
+                .addGap(2, 2, 2)
+                .addComponent(vAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(alphaAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(addButton)
+                .addContainerGap(87, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        if(nameAdd.getText() == "" || surnameAdd.getText() == "" || jobAdd.getText() == "") return;
-        var person = new Person(nameAdd.getText(), surnameAdd.getText(), jobAdd.getText());
-        addPerson(person);
+       try{
+           var v = Double.parseDouble(vAdd.getText());
+           var t = Double.parseDouble(tAdd.getText());
+           var alpha = Double.parseDouble(alphaAdd.getText());
+           var res = calculationMaker.calculate(v, t, alpha);
+           data.addData(res.getResultX(), res.getResultY());
+       }
+       catch(Exception e){}
     }//GEN-LAST:event_addButtonActionPerformed
 
-    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
-        if("".equals(nameEdit.getText()) || "".equals(surnameEdit.getText()) || "".equals(jobEdit.getText())) return;
-        var person = people.get(adjustingPersonIndex);
-        if(!person.getName().equals(nameEdit.getText())) person.setName(nameEdit.getText());
-        if(!person.getSurname().equals(surnameEdit.getText())) person.setSurname(surnameEdit.getText());
-        if(!person.getJob().equals(jobEdit.getText())) person.setJob(jobEdit.getText()); 
-        repaint();
-    }//GEN-LAST:event_editButtonActionPerformed
-
-    @Override
-    public void update(Observable o, Object arg) {
-        repaint();
-    }
-    
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        for (int i = 0; i < people.size(); i++) {
-            Person person = people.get(i);
-            g.drawString(person.getName(), 10, 20 * (i + 1));
-        }
-    }
-
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton addButton;
-    private javax.swing.JToggleButton editButton;
+    private javax.swing.JButton addButton;
+    private javax.swing.JTextField alphaAdd;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JList<Person> jList1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JEditorPane jobAdd;
-    private javax.swing.JEditorPane jobEdit;
-    private javax.swing.JEditorPane nameAdd;
-    private javax.swing.JEditorPane nameEdit;
-    private javax.swing.JEditorPane surnameAdd;
-    private javax.swing.JEditorPane surnameEdit;
+    private javax.swing.JTextField tAdd;
+    private javax.swing.JTextField vAdd;
     // End of variables declaration//GEN-END:variables
+
+static class DataCollection extends Observable {
+        private List<Double> xData = new ArrayList<>();
+        private List<Double> yData = new ArrayList<>();
+
+        DataCollection(List<Double> xData, List<Double> yData){
+            this.xData = xData;
+            this.yData = yData;
+        }
+        
+        public void addData(double x, double y) {
+            xData.add(x);
+            yData.add(y);
+            setChanged();
+            notifyObservers();
+        }
+
+        public void updateData(int index, double newValue) {
+            yData.set(index, newValue);
+            setChanged();
+            notifyObservers();
+        }
+
+        public List<Double> getxData() {
+            return xData;
+        }
+
+        public List<Double> getyData() {
+            return yData;
+        }
+    }    
 }

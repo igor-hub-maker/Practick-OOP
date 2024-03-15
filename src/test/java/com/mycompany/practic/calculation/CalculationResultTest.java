@@ -37,7 +37,7 @@ public class CalculationResultTest {
 
     @org.junit.jupiter.api.BeforeAll
     public static void setUpClass() throws Exception {
-        testResult = new CalculationResult(v,t,alpha, Integer.toHexString(x), Integer.toHexString(y));
+        testResult = new CalculationResult(v,t,alpha, x, y);
         
     }
     /**
@@ -105,9 +105,8 @@ public class CalculationResultTest {
     @org.junit.jupiter.api.Test
     public void testGetResultX() {
         System.out.println("getResultX");
-        String expResult = Integer.toHexString(newX);
-        String result = testResult.getResultX();
-        assertEquals(expResult, result);
+        double result = testResult.getResultX();
+        assertEquals(newX, result);
     }
     
     /**
@@ -116,9 +115,8 @@ public class CalculationResultTest {
         @org.junit.jupiter.api.Test
     public void testGetResultY() {
         System.out.println("getResultY");
-        String expResult = Integer.toHexString(newY);
-        String result = testResult.getResultY();
-        assertEquals(expResult, result);
+        double result = testResult.getResultY();
+        assertEquals(newY, result);
     }
 
     /**
@@ -127,11 +125,9 @@ public class CalculationResultTest {
     @org.junit.jupiter.api.Test
     public void testSetResult() {
         System.out.println("setResult");
-        String result_1 = Integer.toHexString(newX);
-        String result_2 = Integer.toHexString(newY);
-        testResult.setResult(result_1, result_2);
-        assertEquals(result_1, testResult.getResultX());
-        assertEquals(result_2, testResult.getResultY());
+        testResult.setResult(newX, newY);
+        assertEquals(newX, testResult.getResultX());
+        assertEquals(newY, testResult.getResultY());
     }
     
         /**
@@ -140,9 +136,8 @@ public class CalculationResultTest {
     @org.junit.jupiter.api.Test
     public void testSetResultX() {
         System.out.println("setResultX");
-        String result = Integer.toHexString(newX);
-        testResult.setResultX(result);
-        assertEquals(result, testResult.getResultX());
+        testResult.setResultX(newX);
+        assertEquals(newX, testResult.getResultX());
     }
     
     /**
@@ -151,9 +146,8 @@ public class CalculationResultTest {
     @org.junit.jupiter.api.Test
     public void testSetResultY() {
         System.out.println("setResultY");
-        String result = Integer.toHexString(newY);
-        testResult.setResultY(result);
-        assertEquals(result, testResult.getResultY());
+        testResult.setResultY(newY);
+        assertEquals(newY, testResult.getResultY());
     }
 
     /**
@@ -162,7 +156,7 @@ public class CalculationResultTest {
     @org.junit.jupiter.api.Test
     public void testWriteExternal() throws Exception {
         System.out.println("writeExternal");
-        CalculationResult c = new CalculationResult(v, t, alpha, Integer.toHexString(x), Integer.toHexString(y));
+        CalculationResult c = new CalculationResult(v, t, alpha, x, y);
         ObjectOutput out = new ObjectOutputStream(new FileOutputStream("calculation_result.ser"));
         c.writeExternal(out);
     }
